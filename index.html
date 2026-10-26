@@ -2,35 +2,50 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HL Trading Dashboard</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HL Trading Dashboard — EMO Capital</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0f172a; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 20px; }
-  h1 { font-size: 22px; font-weight: 700; color: #f8fafc; }
-  .subtitle { color: #64748b; font-size: 13px; margin-top: 4px; }
-  .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; }
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-  .grid4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 16px; }
-  .card { background: #1e293b; border-radius: 10px; padding: 18px; border: 1px solid #334155; }
-  .card-title { font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
-  .metric { font-size: 26px; font-weight: 700; }
-  .metric-sm { font-size: 18px; font-weight: 600; }
-  .section-title { font-size: 15px; font-weight: 600; color: #94a3b8; margin: 20px 0 10px; border-left: 3px solid #3b82f6; padding-left: 10px; }
-  .badge-acct1 { background: #1e3a5f; color: #60a5fa; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-  .badge-acct2 { background: #1e3a2f; color: #34d399; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { color: #64748b; font-weight: 500; padding: 6px 8px; text-align: left; border-bottom: 1px solid #334155; }
-  td { padding: 7px 8px; border-bottom: 1px solid #1e293b; }
-  tr:hover td { background: #243047; }
-  canvas { max-height: 200px; }
-  .pos-status { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981; margin-right: 6px; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:0.4 } }
-  .stat-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; }
-  .stat-label { color: #64748b; }
-  .divider { height: 1px; background: #334155; margin: 10px 0; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f172a;color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:20px;min-width:900px}
+a{color:inherit;text-decoration:none}
+.header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #1e293b}
+h1{font-size:22px;font-weight:700}.subtitle{color:#64748b;font-size:13px;margin-top:4px}
+.tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid #334155}
+.tab{padding:8px 18px;font-size:13px;color:#64748b;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.tab.active{color:#60a5fa;border-bottom-color:#60a5fa;font-weight:600}
+.tab-content{display:none}.tab-content.active{display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+.card{background:#1e293b;border-radius:10px;padding:18px;border:1px solid #334155}
+.card-title{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.badge-a1{background:#1e3a5f;color:#60a5fa;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:600}
+.badge-a2{background:#1a3a2a;color:#34d399;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:600}
+.stat-row{display:flex;justify-content:space-between;margin-bottom:5px;font-size:13px}
+.stat-label{color:#64748b}.divider{height:1px;background:#334155;margin:10px 0}
+.pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:#10b981;margin-right:5px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{color:#64748b;font-weight:500;padding:7px 8px;text-align:left;border-bottom:1px solid #334155;font-size:12px}
+td{padding:7px 8px;border-bottom:1px solid #1e293b;vertical-align:middle}
+tr:hover td{background:#243047}
+canvas{max-height:200px}
+.section-label{font-size:15px;font-weight:600;color:#94a3b8;margin:16px 0 10px;padding-left:10px;border-left:3px solid #3b82f6}
+.rule-box{background:#141e30;border:1px solid #334155;border-radius:8px;padding:14px;margin-bottom:12px}
+.rule-title{font-size:13px;font-weight:700;color:#60a5fa;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.rule-item{font-size:13px;color:#cbd5e1;line-height:1.7;padding-left:12px;border-left:2px solid #334155;margin-bottom:4px}
+.rule-item b{color:#f8fafc}
+.rule-item .tag{display:inline-block;background:#0f2a47;color:#93c5fd;font-size:11px;padding:1px 6px;border-radius:3px;margin-left:4px}
+.rule-item .tag-warn{display:inline-block;background:#3b1f0a;color:#fb923c;font-size:11px;padding:1px 6px;border-radius:3px;margin-left:4px}
+.rule-item .tag-green{display:inline-block;background:#052e16;color:#86efac;font-size:11px;padding:1px 6px;border-radius:3px;margin-left:4px}
+.changelog-item{border-left:3px solid #334155;padding:10px 14px;margin-bottom:10px;position:relative}
+.changelog-item.latest{border-left-color:#3b82f6}
+.changelog-ver{font-size:12px;font-weight:700;color:#60a5fa;margin-bottom:2px}
+.changelog-date{font-size:11px;color:#64748b;margin-bottom:6px}
+.changelog-desc{font-size:13px;color:#cbd5e1;line-height:1.6}
+.changelog-desc li{margin-left:16px;margin-bottom:2px}
+.blacklist-tag{display:inline-block;background:#3b0f0f;color:#f87171;font-size:11px;padding:1px 7px;border-radius:3px;margin:2px}
+.stat-big{font-size:26px;font-weight:700;margin-bottom:2px}
 </style>
 </head>
 <body>
@@ -38,285 +53,326 @@
 <div class="header">
   <div>
     <h1>🚀 HL Trading Dashboard</h1>
-    <div class="subtitle">Updated: 2026-10-26 01:51 UTC &nbsp;|&nbsp; Hyperliquid Perpetuals</div>
+    <div class="subtitle">2026-10-26 02:13 UTC &nbsp;·&nbsp; EMO Capital &nbsp;·&nbsp; Hyperliquid Perpetuals</div>
   </div>
   <div style="text-align:right">
-    <div style="font-size:13px;color:#64748b">Total AUM</div>
-    <div style="font-size:28px;font-weight:700;color:#f8fafc">$1939</div>
+    <div style="font-size:12px;color:#64748b">Total AUM</div>
+    <div style="font-size:30px;font-weight:700">$1,937</div>
   </div>
 </div>
 
-<!-- Account Cards -->
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('overview')">📊 总览</div>
+  <div class="tab" onclick="switchTab('rules')">📋 策略规则</div>
+  <div class="tab" onclick="switchTab('changelog')">🔄 版本历史</div>
+  <div class="tab" onclick="switchTab('trades')">📝 交易记录</div>
+</div>
+
+<!-- ===== TAB: 总览 ===== -->
+<div id="tab-overview" class="tab-content active">
+
 <div class="grid2">
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <span class="badge-acct1">Acct1 趋势跟踪 v4.2</span>
-      <span style="color:#64748b;font-size:12px"><span class="pos-status"></span>2 持仓</span>
+      <span class="badge-a1">Acct1 趋势跟踪 v4.4</span>
+      <span style="font-size:12px;color:#64748b"><span class="pulse"></span>2 持仓</span>
     </div>
-    <div style="font-size:28px;font-weight:700;color:#f8fafc">$859.43</div>
-    <div style="color:#64748b;font-size:12px;margin-bottom:14px">账户净值（含浮盈）</div>
+    <div class="stat-big">$857.22</div>
+    <div style="color:#64748b;font-size:12px;margin-bottom:12px">账户净值（含浮盈）</div>
     <div class="divider"></div>
     <div class="stat-row"><span class="stat-label">可用保证金</span><span>$647.90</span></div>
-    <div class="stat-row"><span class="stat-label">总交易笔数</span><span>231</span></div>
-    <div class="stat-row"><span class="stat-label">胜率</span><span>28.6%</span></div>
+    <div class="stat-row"><span class="stat-label">总笔数 / 胜率</span><span>231 笔 &nbsp;/&nbsp; 28.6%</span></div>
+    <div class="stat-row"><span class="stat-label">均盈 / 均亏</span><span>$16.65 &nbsp;/&nbsp; <span style="color:#ef4444">$-7.71</span></span></div>
     <div class="stat-row"><span class="stat-label">利润因子</span><span style="color:#ef4444">0.86x</span></div>
     <div class="stat-row"><span class="stat-label">期望值/笔</span><span style="color:#ef4444">$-0.75</span></div>
-    <div class="stat-row"><span class="stat-label">总净PnL</span><span style="color:#ef4444;font-weight:600">$-173.08</span></div>
+    <div class="stat-row"><span class="stat-label">总净 PnL</span><span style="color:#ef4444;font-weight:700">$-173.08</span></div>
   </div>
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <span class="badge-acct2">Acct2 均值回归 v5.2</span>
-      <span style="color:#64748b;font-size:12px">0 持仓</span>
+      <span class="badge-a2">Acct2 均值回归 v5.5</span>
+      <span style="font-size:12px;color:#64748b">0 持仓</span>
     </div>
-    <div style="font-size:28px;font-weight:700;color:#f8fafc">$1079.64</div>
-    <div style="color:#64748b;font-size:12px;margin-bottom:14px">可用资金（Spot USDC）</div>
+    <div class="stat-big">$1079.64</div>
+    <div style="color:#64748b;font-size:12px;margin-bottom:12px">可用资金（Spot USDC）</div>
     <div class="divider"></div>
     <div class="stat-row"><span class="stat-label">可用保证金</span><span>$1079.64</span></div>
-    <div class="stat-row"><span class="stat-label">总交易笔数</span><span>245</span></div>
-    <div class="stat-row"><span class="stat-label">胜率</span><span>31.0%</span></div>
+    <div class="stat-row"><span class="stat-label">总笔数 / 胜率</span><span>245 笔 &nbsp;/&nbsp; 31.0%</span></div>
+    <div class="stat-row"><span class="stat-label">均盈 / 均亏</span><span>$8.81 &nbsp;/&nbsp; <span style="color:#ef4444">$-7.68</span></span></div>
     <div class="stat-row"><span class="stat-label">利润因子</span><span style="color:#ef4444">0.52x</span></div>
     <div class="stat-row"><span class="stat-label">期望值/笔</span><span style="color:#ef4444">$-2.56</span></div>
-    <div class="stat-row"><span class="stat-label">总净PnL</span><span style="color:#ef4444;font-weight:600">$-628.34</span></div>
+    <div class="stat-row"><span class="stat-label">总净 PnL</span><span style="color:#ef4444;font-weight:700">$-628.34</span></div>
   </div>
 </div>
 
-<!-- Current Positions -->
 <div class="grid2">
   <div class="card">
-    <div class="card-title"><span class="pos-status"></span>Acct1 当前持仓</div>
-    <table>
-      <thead><tr><th>币种</th><th>方向</th><th>入场价</th><th>保证金</th><th>浮盈</th></tr></thead>
-      <tbody><tr>
-    <td>COMP</td>
-    <td style="color:#60a5fa">SHORT</td>
-    <td>21.1875</td>
-    <td>$103</td>
-    <td style="color:#10b981">$2.65 (2.6%)</td>
-    </tr><tr>
-    <td>STRK</td>
-    <td style="color:#60a5fa">SHORT</td>
-    <td>0.04665</td>
-    <td>$109</td>
-    <td style="color:#10b981">$8.80 (8.1%)</td>
-    </tr></tbody>
-    </table>
+    <div class="card-title"><span class="pulse"></span>Acct1 当前持仓</div>
+    <table><thead><tr><th>币种</th><th>方向</th><th>入场价</th><th>保证金</th><th>浮盈</th></tr></thead>
+    <tbody><tr><td><b>COMP</b></td><td style="color:#60a5fa">SHORT</td><td>21.1875</td><td>$102</td><td style="color:#10b981;font-weight:600">$1.84 (1.8%)</td></tr><tr><td><b>STRK</b></td><td style="color:#60a5fa">SHORT</td><td>0.04665</td><td>$107</td><td style="color:#10b981;font-weight:600">$7.39 (6.9%)</td></tr></tbody></table>
   </div>
   <div class="card">
     <div class="card-title">Acct2 当前持仓</div>
-    <table>
-      <thead><tr><th>币种</th><th>方向</th><th>入场价</th><th>保证金</th><th>浮盈</th></tr></thead>
-      <tbody><tr><td colspan="5" style="color:#64748b;text-align:center">无持仓</td></tr></tbody>
-    </table>
+    <table><thead><tr><th>币种</th><th>方向</th><th>入场价</th><th>保证金</th><th>浮盈</th></tr></thead>
+    <tbody><tr><td colspan="5" style="color:#64748b;text-align:center;padding:12px">ATR过滤触发 — 暂无持仓</td></tr></tbody></table>
   </div>
 </div>
 
-<!-- Charts Row 1 -->
 <div class="grid2">
-  <div class="card">
-    <div class="card-title">Acct1 周度净PnL ($)</div>
-    <canvas id="wp1Chart"></canvas>
-  </div>
-  <div class="card">
-    <div class="card-title">Acct2 周度净PnL ($)</div>
-    <canvas id="wp2Chart"></canvas>
-  </div>
+  <div class="card"><div class="card-title">Acct1 周度净PnL</div><canvas id="wp1Chart"></canvas></div>
+  <div class="card"><div class="card-title">Acct2 周度净PnL</div><canvas id="wp2Chart"></canvas></div>
 </div>
 
-<!-- Cumulative PnL -->
 <div class="card" style="margin-bottom:16px">
-  <div class="card-title">累计净PnL 曲线 (逐笔)</div>
+  <div class="card-title">累计净PnL 曲线（逐笔）</div>
   <canvas id="cumChart" style="max-height:220px"></canvas>
 </div>
 
-<!-- Coin Breakdown -->
 <div class="grid2">
-  <div class="card">
-    <div class="card-title">Acct1 按币种PnL</div>
-    <canvas id="cp1Chart"></canvas>
+  <div class="card"><div class="card-title">Acct1 按币种PnL</div><canvas id="cp1Chart"></canvas></div>
+  <div class="card"><div class="card-title">Acct2 按币种PnL</div><canvas id="cp2Chart"></canvas></div>
+</div>
+
+</div><!-- /tab-overview -->
+
+<!-- ===== TAB: 策略规则 ===== -->
+<div id="tab-rules" class="tab-content">
+
+<div class="section-label">Acct1 — 趋势跟踪 v4.4</div>
+<div class="grid2">
+  <div>
+    <div class="rule-box">
+      <div class="rule-title">🟢 入场条件</div>
+      <div class="rule-item"><b>信号:</b> 连续2根4h K线同向 ≥ 2%（多/空均可）<span class="tag">completed pair</span></div>
+      <div class="rule-item"><b>趋势过滤:</b> 4h EMA20 — 价格 &gt; EMA 只做多，价格 &lt; EMA 只做空</div>
+      <div class="rule-item"><b>防追高:</b> 前4根K线累计涨跌 &gt; 12% 不入场</div>
+      <div class="rule-item"><b>候选池:</b> TOP 50 流动性币种（含股票标的）</div>
+      <div class="rule-item"><b>黑名单:</b> <span class="blacklist-tag">XPL</span> <span class="blacklist-tag">CRV</span> <span class="blacklist-tag">ENA</span> <span class="blacklist-tag">AR</span> <span class="blacklist-tag">ONDO</span></div>
+      <div class="rule-item"><b>资金:</b> 100U/笔 &nbsp;|&nbsp; 最多8仓 &nbsp;|&nbsp; 每轮最多开3个</div>
+      <div class="rule-item"><b>杠杆:</b> min(10, maxLev)，最低3x</div>
+      <div class="rule-item"><b>扫描频率:</b> 每2小时 <span class="tag">0 */2 * * *</span></div>
+    </div>
+    <div class="rule-box">
+      <div class="rule-title">🔴 出场条件（优先级顺序）</div>
+      <div class="rule-item"><b>交易所trigger止损:</b> 入场时自动挂，做多 entry×0.97 / 做空 entry×1.03 <span class="tag-green">交易所执行</span></div>
+      <div class="rule-item"><b>追踪止损:</b> 当峰值盈利 ≥ 2% 时激活，trigger = peak×0.97（多）/ peak×1.03（空）<span class="tag-green">v4.4新增</span></div>
+      <div class="rule-item"><b>分批止盈①:</b> 浮盈 &gt; 0 且从峰值回撤 ≥ 2% → 平2/3仓位</div>
+      <div class="rule-item"><b>分批止盈②:</b> 从峰值回撤 ≥ 5% → 平剩余全部</div>
+      <div class="rule-item"><b>横盘退出:</b> 持仓 ≥ 48h 且 PnL &lt; 5% → 全平</div>
+      <div class="rule-item"><b>Backup止损:</b> pnl ≤ -4%（trigger失效时兜底）</div>
+    </div>
   </div>
-  <div class="card">
-    <div class="card-title">Acct2 按币种PnL</div>
-    <canvas id="cp2Chart"></canvas>
+  <div>
+    <div class="rule-box">
+      <div class="rule-title">📊 历史绩效（截至今日）</div>
+      <div class="rule-item">总笔数: <b>231</b> &nbsp;|&nbsp; 胜率: <b>28.6%</b></div>
+      <div class="rule-item">均盈: <b style="color:#10b981">$16.65</b> &nbsp;|&nbsp; 均亏: <b style="color:#ef4444">$-7.71</b></div>
+      <div class="rule-item">盈亏比: <b>2.16x</b> &nbsp;|&nbsp; 利润因子: <b style="color:#ef4444">0.86x</b></div>
+      <div class="rule-item">期望值/笔: <b style="color:#ef4444">$-0.75</b></div>
+      <div class="rule-item">累计净PnL: <b style="color:#ef4444">$-173.08</b></div>
+    </div>
+    <div class="rule-box">
+      <div class="rule-title">⚠️ 已知局限</div>
+      <div class="rule-item">0-4h短持仓（52笔）胜率仅4%，亏$424 → 需持仓筛选</div>
+      <div class="rule-item">上涨市场中回调K线被误判为下跌趋势 → 黑名单缓解</div>
+      <div class="rule-item">追高入场（累计&gt;12%）已过滤但临界区仍有风险</div>
+      <div class="rule-item">仅检测forming candle，已完成K线构成的信号可能漏掉</div>
+    </div>
   </div>
 </div>
 
-<!-- Recent Trades -->
-<div class="card" style="margin-top:16px">
-  <div class="card-title">最近15笔交易</div>
+<div class="section-label">Acct2 — 均值回归 v5.5</div>
+<div class="grid2">
+  <div>
+    <div class="rule-box">
+      <div class="rule-title">🟢 入场条件</div>
+      <div class="rule-item"><b>做多信号:</b> RSI &lt; 30 + 价格 &lt; BB下轨 + RSI转向确认</div>
+      <div class="rule-item"><b>做空信号:</b> RSI &gt; 80 + 价格 &gt; BB上轨 + RSI转向确认 <span class="tag">70→80 v5.2升级</span></div>
+      <div class="rule-item"><b>市场状态过滤:</b> 1h ATR% &lt; 2%（高波动/单边行情自动跳过）</div>
+      <div class="rule-item"><b>BB参数:</b> 周期20，2倍标准差 &nbsp;|&nbsp; RSI: Wilder's smoothing 周期14</div>
+      <div class="rule-item"><b>候选池:</b> TOP 50 &nbsp;|&nbsp; 最低成交额5M &nbsp;|&nbsp; 最低杠杆3x</div>
+      <div class="rule-item"><b>资金:</b> 100U/笔 &nbsp;|&nbsp; 最多8仓 &nbsp;|&nbsp; 杠杆min(10,maxLev)</div>
+      <div class="rule-item"><b>扫描频率:</b> 每1小时 <span class="tag">1 * * * *</span></div>
+    </div>
+    <div class="rule-box">
+      <div class="rule-title">🔴 出场条件（优先级顺序）</div>
+      <div class="rule-item"><b>交易所trigger止损:</b> 做多 entry×0.97 / 做空 entry×1.03 <span class="tag-green">交易所执行</span></div>
+      <div class="rule-item"><b>追踪止损:</b> 峰值盈利≥2%激活，peak×0.97/1.03动态跟随 <span class="tag-green">v5.5新增</span></div>
+      <div class="rule-item"><b>分批止盈①:</b> 价格回BB中轨 + PnL ≥ 0 → 平50%仓位</div>
+      <div class="rule-item"><b>分批止盈②:</b> BB反向轨 / RSI反转5点(+盈利) / 持仓48h → 全平</div>
+      <div class="rule-item"><b>时间止损:</b> 持仓 ≥ 24h（未触发半仓止盈时）</div>
+      <div class="rule-item"><b>Backup止损:</b> pnl ≤ -4%（trigger失效时兜底）</div>
+    </div>
+  </div>
+  <div>
+    <div class="rule-box">
+      <div class="rule-title">📊 历史绩效（截至今日）</div>
+      <div class="rule-item">总笔数: <b>245</b> &nbsp;|&nbsp; 胜率: <b>31.0%</b></div>
+      <div class="rule-item">均盈: <b style="color:#10b981">$8.81</b> &nbsp;|&nbsp; 均亏: <b style="color:#ef4444">$-7.68</b></div>
+      <div class="rule-item">盈亏比: <b>1.15x</b> &nbsp;|&nbsp; 利润因子: <b style="color:#ef4444">0.52x</b></div>
+      <div class="rule-item">期望值/笔: <b style="color:#ef4444">$-2.56</b></div>
+      <div class="rule-item">累计净PnL: <b style="color:#ef4444">$-628.34</b></div>
+    </div>
+    <div class="rule-box">
+      <div class="rule-title">⚠️ 已知局限</div>
+      <div class="rule-item">Short方向118笔历史亏$448 → RSI阈值提至80缓解</div>
+      <div class="rule-item">ATR过滤在"温和持续阴跌"场景下失效（ATR低但方向一致）</div>
+      <div class="rule-item">均值回归依赖震荡市，趋势市ATR过滤是唯一保护</div>
+      <div class="rule-item">分批平仓后RSI反转检测依赖rsi_peak_after_half记录</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /tab-rules -->
+
+<!-- ===== TAB: 版本历史 ===== -->
+<div id="tab-changelog" class="tab-content">
+
+<div class="section-label">Acct1 趋势跟踪 — 版本演进</div>
+<div class="changelog-item latest">
+  <div class="changelog-ver">v4.4 · 最新</div>
+  <div class="changelog-date">2026-10-24</div>
+  <div class="changelog-desc"><ul>
+    <li>追踪止损: peak×0.97激活条件2%，每次扫描自动更新链上止损挂单</li>
+    <li>修复 Bug7: 低价token精度问题 (round_trigger: &lt;$0.1用3位小数)</li>
+    <li>limit_px 修复: 基于mark_px×0.90/1.10，不再用trigger×0.95</li>
+  </ul></div>
+</div>
+<div class="changelog-item">
+  <div class="changelog-ver">v4.3</div>
+  <div class="changelog-date">2026-10-24</div>
+  <div class="changelog-desc"><ul>
+    <li>completed pair信号修复（同时检测forming+已完成K线组合）</li>
+    <li>网络3次重试逻辑</li>
+    <li>triggerPx float修复（Bug5）</li>
+  </ul></div>
+</div>
+<div class="changelog-item">
+  <div class="changelog-ver">v4.2</div>
+  <div class="changelog-date">2026-10-23</div>
+  <div class="changelog-desc"><ul>
+    <li>黑名单: XPL/CRV/ENA/AR/ONDO（历史0%胜率合计亏$235）</li>
+    <li>止损改为交易所trigger止损单（开仓时即挂，不依赖1h轮询）</li>
+    <li>分批止盈: 峰值回撤2%平2/3 + 回撤5%全平</li>
+    <li>扫描频率2h（原1h），候选池TOP50（原30）</li>
+  </ul></div>
+</div>
+<div class="changelog-item">
+  <div class="changelog-ver">v4.1</div>
+  <div class="changelog-date">2026-09-22</div>
+  <div class="changelog-desc"><ul>
+    <li>4h EMA20方向过滤: 价格&gt;EMA只做多，价格&lt;EMA只做空</li>
+    <li>防追高: 前4根K线累计涨跌&gt;12%不入场</li>
+    <li>7天回测: -219U → -11U，改善+208U</li>
+  </ul></div>
+</div>
+<div class="changelog-item">
+  <div class="changelog-ver">v4.0</div>
+  <div class="changelog-date">2026-09-20</div>
+  <div class="changelog-desc"><ul>
+    <li>全面重写，修复幽灵仓位死锁（Bug1）</li>
+    <li>链上同步sync_with_chain()机制</li>
+    <li>market_close None检测（Bug2）</li>
+    <li>教训: 做空占57%被上涨趋势碾压，-$219 in 7天</li>
+  </ul></div>
+</div>
+
+<div class="section-label" style="margin-top:24px">Acct2 均值回归 — 版本演进</div>
+<div class="changelog-item latest">
+  <div class="changelog-ver">v5.5 · 最新</div>
+  <div class="changelog-date">2026-10-24</div>
+  <div class="changelog-desc"><ul>
+    <li>追踪止损: peak×0.97激活，MAX8仓，移除12h开仓限制</li>
+    <li>Bug5/6/7 全修（triggerPx float / limit_px / 低价精度）</li>
+  </ul></div>
+</div>
+<div class="changelog-item">
+  <div class="changelog-ver">v5.3</div>
+  <div class="changelog-date">2026-10-24</div>
+  <div class="changelog-desc"><ul>
+    <li>TIME_STOP=48h（原24h）</li>
+    <li>triggerPx float修复（Bug5）</li>
+    <li>存量3仓（SUI/XRP/LIT）手动补挂止损</li>
+  </ul></div>
+</div>
+<div class="changelog-item">
+  <div class="changelog-ver">v5.2</div>
+  <div class="changelog-date">2026-10-23</div>
+  <div class="changelog-desc"><ul>
+    <li>RSI做空阈值70→80（Short 118笔亏$448教训）</li>
+    <li>分批止盈: BB中轨平50% + BB反向轨/RSI反转/48h全平</li>
+    <li>交易所trigger止损单（开仓时自动挂）</li>
+    <li>Acct2充值至$1,106 spot + $260 perp</li>
+  </ul></div>
+</div>
+<div class="changelog-item">
+  <div class="changelog-ver">v5.1</div>
+  <div class="changelog-date">2026-10-05</div>
+  <div class="changelog-desc"><ul>
+    <li>保证金100U（原50U）&nbsp;|&nbsp; MAX_POSITIONS=5</li>
+    <li>12h窗口最多开3仓 &nbsp;|&nbsp; 趋势暂停机制（3仓全亏≥2%暂停24h）</li>
+  </ul></div>
+</div>
+<div class="changelog-item">
+  <div class="changelog-ver">v5.0</div>
+  <div class="changelog-date">2026-09-25</div>
+  <div class="changelog-desc"><ul>
+    <li>第一性原理重写: 去掉所有EMA过滤，只保留ATR状态过滤</li>
+    <li>ATR%&lt;2%: 高波动单边行情跳过 &nbsp;|&nbsp; 候选池TOP50 &nbsp;|&nbsp; 50U/笔</li>
+    <li>教训: v4.0 EMA方向过滤与均值回归逻辑死锁→14天0笔交易</li>
+  </ul></div>
+</div>
+<div class="changelog-item">
+  <div class="changelog-ver">v3.2 → v4.0 教训</div>
+  <div class="changelog-date">2026-09-13 ~ 09-23</div>
+  <div class="changelog-desc"><ul>
+    <li>v3.2 震荡市13笔全胜+$204，但9/17单边上涨1/8胜-$182（无过滤保护）</li>
+    <li>v4.0 加EMA过滤→与均值回归原理矛盾→永远0交易</li>
+    <li>核心认知: 均值回归策略命运取决于市场状态，不取决于参数调优</li>
+  </ul></div>
+</div>
+
+</div><!-- /tab-changelog -->
+
+<!-- ===== TAB: 交易记录 ===== -->
+<div id="tab-trades" class="tab-content">
+<div class="card">
+  <div class="card-title">最近15笔交易（两账户合并）</div>
   <table>
     <thead><tr><th>时间</th><th>币种</th><th>方向</th><th>结果</th><th>净PnL</th><th>持仓时长</th></tr></thead>
-    <tbody><tr>
-    <td style="color:#94a3b8">10-25 04:01</td>
-    <td><b>FARTCOIN</b></td>
-    <td style="color:#60a5fa;font-size:12px">Long</td>
-    <td><span style="background:#064e3b;color:#10b981;padding:1px 6px;border-radius:4px;font-size:11px">WIN</span></td>
-    <td style="color:#10b981;font-weight:600">$17.44</td>
-    <td style="color:#64748b">12.0h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-24 23:01</td>
-    <td><b>UNI</b></td>
-    <td style="color:#60a5fa;font-size:12px">Long</td>
-    <td><span style="background:#064e3b;color:#10b981;padding:1px 6px;border-radius:4px;font-size:11px">WIN</span></td>
-    <td style="color:#10b981;font-weight:600">$11.06</td>
-    <td style="color:#64748b">7.0h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-24 23:01</td>
-    <td><b>SOL</b></td>
-    <td style="color:#60a5fa;font-size:12px">Long</td>
-    <td><span style="background:#064e3b;color:#10b981;padding:1px 6px;border-radius:4px;font-size:11px">WIN</span></td>
-    <td style="color:#10b981;font-weight:600">$7.97</td>
-    <td style="color:#64748b">7.0h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-24 15:19</td>
-    <td><b>DOGE</b></td>
-    <td style="color:#60a5fa;font-size:12px">Long</td>
-    <td><span style="background:#450a0a;color:#ef4444;padding:1px 6px;border-radius:4px;font-size:11px">LOSS</span></td>
-    <td style="color:#ef4444;font-weight:600">$-8.90</td>
-    <td style="color:#64748b">0.3h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-24 15:19</td>
-    <td><b>SUI</b></td>
-    <td style="color:#60a5fa;font-size:12px">Long</td>
-    <td><span style="background:#450a0a;color:#ef4444;padding:1px 6px;border-radius:4px;font-size:11px">LOSS</span></td>
-    <td style="color:#ef4444;font-weight:600">$-1.18</td>
-    <td style="color:#64748b">16.3h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-24 15:19</td>
-    <td><b>XRP</b></td>
-    <td style="color:#60a5fa;font-size:12px">Long</td>
-    <td><span style="background:#450a0a;color:#ef4444;padding:1px 6px;border-radius:4px;font-size:11px">LOSS</span></td>
-    <td style="color:#ef4444;font-weight:600">$-25.89</td>
-    <td style="color:#64748b">16.3h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-24 15:19</td>
-    <td><b>FARTCOIN</b></td>
-    <td style="color:#60a5fa;font-size:12px">Long</td>
-    <td><span style="background:#450a0a;color:#ef4444;padding:1px 6px;border-radius:4px;font-size:11px">LOSS</span></td>
-    <td style="color:#ef4444;font-weight:600">$-19.29</td>
-    <td style="color:#64748b">0.3h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-24 15:19</td>
-    <td><b>LIT</b></td>
-    <td style="color:#60a5fa;font-size:12px">Long</td>
-    <td><span style="background:#450a0a;color:#ef4444;padding:1px 6px;border-radius:4px;font-size:11px">LOSS</span></td>
-    <td style="color:#ef4444;font-weight:600">$-0.58</td>
-    <td style="color:#64748b">16.3h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-24 12:01</td>
-    <td><b>STRK</b></td>
-    <td style="color:#60a5fa;font-size:12px">Long</td>
-    <td><span style="background:#450a0a;color:#ef4444;padding:1px 6px;border-radius:4px;font-size:11px">LOSS</span></td>
-    <td style="color:#ef4444;font-weight:600">$-9.02</td>
-    <td style="color:#64748b">16.0h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-23 22:00</td>
-    <td><b>kPEPE</b></td>
-    <td style="color:#60a5fa;font-size:12px">Long</td>
-    <td><span style="background:#064e3b;color:#10b981;padding:1px 6px;border-radius:4px;font-size:11px">WIN</span></td>
-    <td style="color:#10b981;font-weight:600">$8.99</td>
-    <td style="color:#64748b">16.0h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-23 20:01</td>
-    <td><b>kPEPE</b></td>
-    <td style="color:#60a5fa;font-size:12px">Short</td>
-    <td><span style="background:#064e3b;color:#10b981;padding:1px 6px;border-radius:4px;font-size:11px">WIN</span></td>
-    <td style="color:#10b981;font-weight:600">$21.03</td>
-    <td style="color:#64748b">10.0h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-23 02:50</td>
-    <td><b>PUMP</b></td>
-    <td style="color:#60a5fa;font-size:12px">Short</td>
-    <td><span style="background:#450a0a;color:#ef4444;padding:1px 6px;border-radius:4px;font-size:11px">LOSS</span></td>
-    <td style="color:#ef4444;font-weight:600">$-22.37</td>
-    <td style="color:#64748b">9.8h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-22 10:05</td>
-    <td><b>AVAX</b></td>
-    <td style="color:#60a5fa;font-size:12px">Short</td>
-    <td><span style="background:#064e3b;color:#10b981;padding:1px 6px;border-radius:4px;font-size:11px">WIN</span></td>
-    <td style="color:#10b981;font-weight:600">$11.66</td>
-    <td style="color:#64748b">7.1h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-22 10:05</td>
-    <td><b>CRV</b></td>
-    <td style="color:#60a5fa;font-size:12px">Short</td>
-    <td><span style="background:#450a0a;color:#ef4444;padding:1px 6px;border-radius:4px;font-size:11px">LOSS</span></td>
-    <td style="color:#ef4444;font-weight:600">$-0.13</td>
-    <td style="color:#64748b">4.1h</td>
-    </tr><tr>
-    <td style="color:#94a3b8">10-22 10:05</td>
-    <td><b>WLD</b></td>
-    <td style="color:#60a5fa;font-size:12px">Short</td>
-    <td><span style="background:#450a0a;color:#ef4444;padding:1px 6px;border-radius:4px;font-size:11px">LOSS</span></td>
-    <td style="color:#ef4444;font-weight:600">$-7.05</td>
-    <td style="color:#64748b">4.1h</td>
-    </tr></tbody>
+    <tbody><tr><td style="color:#94a3b8">10-25 04:01</td><td><b>FARTCOIN</b></td><td style="color:#60a5fa;font-size:12px">Long</td><td><span style="background:#064e3b;color:#10b981;padding:1px 7px;border-radius:4px;font-size:11px">WIN</span></td><td style="color:#10b981;font-weight:600">$17.44</td><td style="color:#64748b">12.0h</td></tr><tr><td style="color:#94a3b8">10-24 23:01</td><td><b>UNI</b></td><td style="color:#60a5fa;font-size:12px">Long</td><td><span style="background:#064e3b;color:#10b981;padding:1px 7px;border-radius:4px;font-size:11px">WIN</span></td><td style="color:#10b981;font-weight:600">$11.06</td><td style="color:#64748b">7.0h</td></tr><tr><td style="color:#94a3b8">10-24 23:01</td><td><b>SOL</b></td><td style="color:#60a5fa;font-size:12px">Long</td><td><span style="background:#064e3b;color:#10b981;padding:1px 7px;border-radius:4px;font-size:11px">WIN</span></td><td style="color:#10b981;font-weight:600">$7.97</td><td style="color:#64748b">7.0h</td></tr><tr><td style="color:#94a3b8">10-24 15:19</td><td><b>DOGE</b></td><td style="color:#60a5fa;font-size:12px">Long</td><td><span style="background:#450a0a;color:#ef4444;padding:1px 7px;border-radius:4px;font-size:11px">LOSS</span></td><td style="color:#ef4444;font-weight:600">$-8.90</td><td style="color:#64748b">0.3h</td></tr><tr><td style="color:#94a3b8">10-24 15:19</td><td><b>SUI</b></td><td style="color:#60a5fa;font-size:12px">Long</td><td><span style="background:#450a0a;color:#ef4444;padding:1px 7px;border-radius:4px;font-size:11px">LOSS</span></td><td style="color:#ef4444;font-weight:600">$-1.18</td><td style="color:#64748b">16.3h</td></tr><tr><td style="color:#94a3b8">10-24 15:19</td><td><b>XRP</b></td><td style="color:#60a5fa;font-size:12px">Long</td><td><span style="background:#450a0a;color:#ef4444;padding:1px 7px;border-radius:4px;font-size:11px">LOSS</span></td><td style="color:#ef4444;font-weight:600">$-25.89</td><td style="color:#64748b">16.3h</td></tr><tr><td style="color:#94a3b8">10-24 15:19</td><td><b>FARTCOIN</b></td><td style="color:#60a5fa;font-size:12px">Long</td><td><span style="background:#450a0a;color:#ef4444;padding:1px 7px;border-radius:4px;font-size:11px">LOSS</span></td><td style="color:#ef4444;font-weight:600">$-19.29</td><td style="color:#64748b">0.3h</td></tr><tr><td style="color:#94a3b8">10-24 15:19</td><td><b>LIT</b></td><td style="color:#60a5fa;font-size:12px">Long</td><td><span style="background:#450a0a;color:#ef4444;padding:1px 7px;border-radius:4px;font-size:11px">LOSS</span></td><td style="color:#ef4444;font-weight:600">$-0.58</td><td style="color:#64748b">16.3h</td></tr><tr><td style="color:#94a3b8">10-24 12:01</td><td><b>STRK</b></td><td style="color:#60a5fa;font-size:12px">Long</td><td><span style="background:#450a0a;color:#ef4444;padding:1px 7px;border-radius:4px;font-size:11px">LOSS</span></td><td style="color:#ef4444;font-weight:600">$-9.02</td><td style="color:#64748b">16.0h</td></tr><tr><td style="color:#94a3b8">10-23 22:00</td><td><b>kPEPE</b></td><td style="color:#60a5fa;font-size:12px">Long</td><td><span style="background:#064e3b;color:#10b981;padding:1px 7px;border-radius:4px;font-size:11px">WIN</span></td><td style="color:#10b981;font-weight:600">$8.99</td><td style="color:#64748b">16.0h</td></tr><tr><td style="color:#94a3b8">10-23 20:01</td><td><b>kPEPE</b></td><td style="color:#60a5fa;font-size:12px">Short</td><td><span style="background:#064e3b;color:#10b981;padding:1px 7px;border-radius:4px;font-size:11px">WIN</span></td><td style="color:#10b981;font-weight:600">$21.03</td><td style="color:#64748b">10.0h</td></tr><tr><td style="color:#94a3b8">10-23 02:50</td><td><b>PUMP</b></td><td style="color:#60a5fa;font-size:12px">Short</td><td><span style="background:#450a0a;color:#ef4444;padding:1px 7px;border-radius:4px;font-size:11px">LOSS</span></td><td style="color:#ef4444;font-weight:600">$-22.37</td><td style="color:#64748b">9.8h</td></tr><tr><td style="color:#94a3b8">10-22 10:07</td><td><b>INJ</b></td><td style="color:#60a5fa;font-size:12px">Long</td><td><span style="background:#450a0a;color:#ef4444;padding:1px 7px;border-radius:4px;font-size:11px">LOSS</span></td><td style="color:#ef4444;font-weight:600">$-1.61</td><td style="color:#64748b">7.1h</td></tr><tr><td style="color:#94a3b8">10-22 10:05</td><td><b>AVAX</b></td><td style="color:#60a5fa;font-size:12px">Short</td><td><span style="background:#064e3b;color:#10b981;padding:1px 7px;border-radius:4px;font-size:11px">WIN</span></td><td style="color:#10b981;font-weight:600">$11.66</td><td style="color:#64748b">7.1h</td></tr><tr><td style="color:#94a3b8">10-22 10:05</td><td><b>CRV</b></td><td style="color:#60a5fa;font-size:12px">Short</td><td><span style="background:#450a0a;color:#ef4444;padding:1px 7px;border-radius:4px;font-size:11px">LOSS</span></td><td style="color:#ef4444;font-weight:600">$-0.13</td><td style="color:#64748b">4.1h</td></tr></tbody>
   </table>
 </div>
+</div><!-- /tab-trades -->
 
-<div style="text-align:center;color:#475569;font-size:12px;margin-top:20px;padding:10px">
-  EMO Capital · Hyperliquid Automated Trading · 2026-10-26 01:51 UTC
+<div style="text-align:center;color:#475569;font-size:12px;margin-top:24px;padding:10px">
+  EMO Capital · Hyperliquid Automated Trading · 2026-10-26 02:13 UTC · <a href="https://github.com/curiousbaby666/hl-dashboard" style="color:#475569">GitHub</a>
 </div>
 
 <script>
-const wp1Labels = ["2026-W36", "2026-W37", "2026-W38", "2026-W39", "2026-W40", "2026-W41", "2026-W42", "2026-W43"];
-const wp1Data   = [-65.78, -63.4, -126.61, -94.32, -5.67, -24.38, -136.2, 343.28];
-const wp2Labels = ["2026-W36", "2026-W37", "2026-W38", "2026-W39", "2026-W40", "2026-W41", "2026-W42", "2026-W43"];
-const wp2Data   = [-64.21, -46.72, -325.72, 38.7, 52.76, -190.96, -52.4, -39.8];
-const cp1Labels = ["MET", "CHIP", "ZEN", "BERA", "SAGA", "LTC", "INJ", "REZ", "kPEPE", "AERO", "AVAX", "DASH", "DOT", "CASHCAT", "kBONK", "LIT", "SOPH", "PUMP", "SUI", "ZEC"];
-const cp1Data   = [-0.37, -0.31, -0.26, -0.18, -0.09, 1.34, 2.23, 5.86, 6.73, 6.76, 11.64, 12.45, 13.19, 16.2, 18.06, 41.7, 55.21, 100.38, 123.05, 238.72];
-const cp2Labels = ["ZRO", "JTO", "CHIP", "GRASS", "SUSHI", "ZEN", "DASH", "XMR", "ICP", "AAVE", "GRAM", "DOT", "APT", "kPEPE", "UNI", "JUP", "SOPH", "ONDO", "HYPE", "TRUMP"];
-const cp2Data   = [-0.72, -0.37, -0.21, 0.37, 0.42, 0.45, 2.47, 2.75, 3.26, 3.48, 8.39, 8.49, 9.21, 9.34, 10.57, 22.66, 22.87, 53.23, 66.62, 73.79];
-const cum1L = ["09/04", "09/04", "09/04", "09/04", "09/04", "09/04", "09/04", "09/04", "09/04", "09/05", "09/05", "09/05", "09/05", "09/05", "09/05", "09/05", "09/05", "09/05", "09/05", "09/05", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/12", "09/12", "09/12", "09/12", "09/12", "09/12", "09/12", "09/12", "09/12", "09/12", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/14", "09/14", "09/14", "09/14", "09/14", "09/14", "09/14", "09/14", "09/14", "09/14", "09/15", "09/15", "09/16", "09/16", "09/16", "09/16", "09/16", "09/16", "09/17", "09/17", "09/17", "09/18", "09/19", "09/19", "09/19", "09/19", "09/19", "09/19", "09/19", "09/19", "09/20", "09/20", "09/20", "09/20", "09/21", "09/21", "09/21", "09/21", "09/22", "09/22", "09/23", "09/23", "09/24", "09/24", "09/24", "09/25", "09/25", "09/25", "09/26", "09/26", "09/27", "09/27", "09/28", "09/29", "10/01", "10/02", "10/05", "10/07", "10/07", "10/07", "10/07", "10/08", "10/08", "10/08", "10/08", "10/08", "10/09", "10/10", "10/10", "10/10", "10/10", "10/10", "10/12", "10/12", "10/12", "10/12", "10/12", "10/12", "10/13", "10/13", "10/13", "10/13", "10/13", "10/13", "10/13", "10/19", "10/19", "10/20", "10/21", "10/21", "10/21", "10/21", "10/21", "10/21", "10/21", "10/21", "10/22", "10/22", "10/22", "10/22", "10/22", "10/22", "10/22", "10/22", "10/23", "10/23"];
-const cum1V = [1.42, 1.24, 1.07, -7.74, -9.06, -24.63, -27.7, -32.02, -32.75, -33.78, -37.32, -43.88, -51.64, -55.69, -55.73, -61.61, -57.74, -57.62, -54.65, -57.08, -55.31, -59.99, -56.3, -56.56, -59.2, -64.98, -48.5, -49.04, -51.48, -57.61, -60.23, -65.35, -65.78, -62.56, -63.29, -65.02, -60.81, -61.21, -65.19, -67.21, -69.69, -71.58, -72.72, -83.24, -89.15, -95.41, -100.53, -105.73, -108.02, -107.75, -108.33, -103.87, -104.36, -100.61, -100.65, -103.32, -101.36, -84.65, -86.48, -82.04, -82.48, -85.25, -86.25, -87.02, -93.63, -97.91, -91.86, -83.02, -81.68, -84.98, -66.92, -11.71, -5.23, -2.68, -4.25, -3.11, -6.62, -13.21, -14.37, -24.26, -25.53, -27.63, -30.54, -32.58, -35.04, -35.35, -35.77, -37.32, -35.55, -48.07, -53.65, -59.11, -69.51, -74.3, -78.85, -84.13, -88.35, -87.48, -89.96, -101.11, -112.63, -114.07, -105.29, -96.28, -99.24, -96.86, -100.91, -101.99, -108.49, -115.34, -115.71, -118.79, -119.76, -122.56, -121.68, -123.28, -123.32, -123.23, -125.88, -128.94, -126.31, -126.48, -129.03, -129.4, -129.18, -131.66, -134.39, -136.77, -138.33, -139.07, -148.85, -158.84, -159.1, -140.31, -146.09, -156.38, -162.21, -169.36, -176.06, -176.6, -186.28, -193.98, -196.01, -196.18, -208.63, -208.73, -212.44, -183.32, -165.06, -166.59, -160.74, -137.53, -124.0, -115.54, -112.59, -166.78, -191.36, -255.7, -255.79, -275.2, -246.78, -286.83, -340.88, -250.97, -252.61, -206.25, -220.49, -210.94, -228.9, -228.45, -283.68, -330.52, -364.96, -375.74, -377.81, -316.55, -350.11, -353.57, -346.61, -353.73, -355.78, -322.64, -330.53, -345.44, -372.2, -376.23, -378.8, -408.75, -391.72, -345.41, -335.41, -345.32, -361.88, -362.28, -361.92, -368.94, -380.16, -413.64, -419.44, -438.15, -474.09, -466.89, -469.57, -471.69, -457.47, -457.5, -489.03, -499.93, -508.19, -516.36, -501.35, -323.16, -342.76, -342.48, -319.04, -322.75, -326.21, -229.45, -229.67, -237.27, -189.43, -194.05, -193.43, -181.77, -181.9, -188.95, -175.89, -162.32, -159.7, -182.07, -173.08];
-const cum2L = ["09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/15", "09/15", "09/15", "09/16", "09/16", "09/16", "09/16", "09/17", "09/17", "09/17", "09/17", "09/18", "09/18", "09/18", "09/18", "09/18", "09/18", "09/18", "09/18", "09/19", "09/19", "09/20", "09/25", "09/27", "09/27", "09/27", "09/27", "09/28", "09/28", "09/29", "09/29", "09/29", "09/30", "10/01", "10/02", "10/02", "10/03", "10/03", "10/03", "10/04", "10/04", "10/05", "10/05", "10/05", "10/05", "10/05", "10/05", "10/05", "10/06", "10/07", "10/07", "10/07", "10/08", "10/08", "10/08", "10/08", "10/09", "10/09", "10/10", "10/10", "10/12", "10/12", "10/13", "10/20", "10/21", "10/22", "10/22", "10/23", "10/24", "10/24", "10/24", "10/24", "10/24", "10/24", "10/24", "10/24", "10/25"];
-const cum2V = [-0.26, -1.08, -6.93, -7.35, -9.06, -9.55, -11.44, -12.91, -18.32, -9.96, -12.48, -13.86, -16.95, -22.52, -24.1, -26.39, -28.79, -31.99, -33.19, -35.21, -40.62, -43.36, -44.11, -45.5, -47.46, -57.52, -61.82, -64.21, -66.85, -67.02, -52.93, -29.46, -31.24, -31.25, -31.98, -36.52, -36.68, -44.3, -46.57, -51.37, -48.63, -50.23, -52.16, -52.15, -53.59, -57.24, -62.61, -69.43, -65.36, -67.22, -73.33, -74.54, -78.96, -80.41, -81.22, -83.24, -88.48, -89.2, -87.2, -79.67, -79.79, -79.4, -78.79, -78.62, -79.4, -81.79, -81.93, -84.77, -85.76, -88.28, -88.89, -90.62, -92.14, -92.13, -94.66, -96.02, -97.28, -99.06, -101.25, -103.2, -104.61, -108.01, -108.33, -94.47, -95.96, -94.64, -97.24, -99.57, -100.92, -105.19, -109.64, -109.66, -112.69, -113.65, -118.19, -116.64, -125.35, -120.25, -121.38, -122.17, -131.79, -133.54, -135.66, -138.03, -139.62, -142.23, -143.36, -144.44, -122.74, -124.35, -125.46, -126.78, -131.84, -131.93, -130.32, -126.81, -125.83, -126.88, -129.23, -130.62, -133.85, -132.08, -133.9, -137.3, -139.2, -139.63, -142.84, -150.09, -152.37, -155.86, -158.52, -158.53, -158.41, -158.3, -159.95, -161.87, -174.25, -177.01, -177.32, -174.32, -173.33, -174.05, -170.27, -169.16, -161.31, -160.44, -158.45, -154.03, -153.66, -154.81, -156.13, -152.78, -144.54, -144.58, -145.42, -147.21, -146.64, -146.64, -146.58, -146.55, -146.56, -134.67, -131.74, -130.22, -126.58, -123.22, -116.95, -110.93, -100.87, -91.55, -85.43, -68.66, -91.17, -32.54, 25.09, 28.57, 24.33, 21.87, -22.95, -37.85, -129.1, -145.44, -186.39, -222.53, -238.37, -356.54, -367.42, -438.49, -446.56, -436.65, -420.07, -412.97, -420.25, -426.63, -397.94, -340.47, -337.72, -354.94, -371.81, -381.82, -372.79, -356.48, -336.25, -331.4, -329.95, -329.18, -319.65, -320.61, -345.18, -344.2, -344.93, -350.97, -352.65, -369.18, -370.58, -404.5, -401.53, -407.72, -423.77, -437.63, -440.42, -463.56, -496.71, -538.42, -510.21, -494.55, -543.7, -536.14, -526.93, -553.23, -588.54, -632.36, -632.65, -619.38, -620.99, -599.96, -608.98, -617.87, -619.05, -644.94, -664.23, -664.81, -656.84, -645.79, -628.34];
-
-const DEF = { responsive: true, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$' + ctx.raw.toFixed(2) } } }, scales: { x: { ticks: { color:'#64748b',font:{size:10} }, grid: {color:'#1e293b'} }, y: { ticks: { color:'#64748b',font:{size:10}, callback: v => '$'+v }, grid: {color:'#1e293b'} } } };
-
-function barColors(data) {
-  return data.map(v => v >= 0 ? 'rgba(16,185,129,0.8)' : 'rgba(239,68,68,0.8)');
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    const names=['overview','rules','changelog','trades'];
+    t.classList.toggle('active', names[i]===name);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
 }
 
-new Chart(document.getElementById('wp1Chart'), {
-  type: 'bar',
-  data: { labels: wp1Labels, datasets: [{ data: wp1Data, backgroundColor: barColors(wp1Data), borderRadius: 4 }] },
-  options: DEF
-});
+const bc = data => data.map(v => v>=0 ? 'rgba(16,185,129,0.85)' : 'rgba(239,68,68,0.85)');
+const DEF = {responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'$'+c.raw?.toFixed(2)}}},scales:{x:{ticks:{color:'#64748b',font:{size:10}},grid:{color:'#1e293b'}},y:{ticks:{color:'#64748b',font:{size:10},callback:v=>'$'+v},grid:{color:'#1e293b'}}}};
 
-new Chart(document.getElementById('wp2Chart'), {
-  type: 'bar',
-  data: { labels: wp2Labels, datasets: [{ data: wp2Data, backgroundColor: barColors(wp2Data), borderRadius: 4 }] },
-  options: DEF
-});
+const wp1Data=[-65.78, -63.4, -126.61, -94.32, -5.67, -24.38, -136.2, 343.28], wp2Data=[-64.21, -46.72, -325.72, 38.7, 52.76, -190.96, -52.4, -39.8], allWeeks=["2026-W36", "2026-W37", "2026-W38", "2026-W39", "2026-W40", "2026-W41", "2026-W42", "2026-W43"];
+new Chart(document.getElementById('wp1Chart'),{type:'bar',data:{labels:allWeeks,datasets:[{data:wp1Data,backgroundColor:bc(wp1Data),borderRadius:4}]},options:DEF});
+new Chart(document.getElementById('wp2Chart'),{type:'bar',data:{labels:allWeeks,datasets:[{data:wp2Data,backgroundColor:bc(wp2Data),borderRadius:4}]},options:DEF});
 
-new Chart(document.getElementById('cp1Chart'), {
-  type: 'bar',
-  data: { labels: cp1Labels, datasets: [{ data: cp1Data, backgroundColor: barColors(cp1Data), borderRadius: 4, indexAxis: 'y' }] },
-  options: { ...DEF, indexAxis: 'y', scales: { x: { ticks: { color:'#64748b',font:{size:10}, callback: v => '$'+v }, grid: {color:'#1e293b'} }, y: { ticks: { color:'#64748b',font:{size:10} }, grid: {color:'#1e293b'} } } }
-});
+new Chart(document.getElementById('cp1Chart'),{type:'bar',data:{labels:["MET", "CHIP", "ZEN", "BERA", "SAGA", "LTC", "INJ", "REZ", "kPEPE", "AERO", "AVAX", "DASH", "DOT", "CASHCAT", "kBONK", "LIT", "SOPH", "PUMP", "SUI", "ZEC"],datasets:[{data:[-0.37, -0.31, -0.26, -0.18, -0.09, 1.34, 2.23, 5.86, 6.73, 6.76, 11.64, 12.45, 13.19, 16.2, 18.06, 41.7, 55.21, 100.38, 123.05, 238.72],backgroundColor:bc([-0.37, -0.31, -0.26, -0.18, -0.09, 1.34, 2.23, 5.86, 6.73, 6.76, 11.64, 12.45, 13.19, 16.2, 18.06, 41.7, 55.21, 100.38, 123.05, 238.72]),borderRadius:4,indexAxis:'y'}]},options:{...DEF,indexAxis:'y',scales:{x:{ticks:{color:'#64748b',font:{size:10},callback:v=>'$'+v},grid:{color:'#1e293b'}},y:{ticks:{color:'#64748b',font:{size:10}},grid:{color:'#1e293b'}}}}});
+new Chart(document.getElementById('cp2Chart'),{type:'bar',data:{labels:["ZRO", "JTO", "CHIP", "GRASS", "SUSHI", "ZEN", "DASH", "XMR", "ICP", "AAVE", "GRAM", "DOT", "APT", "kPEPE", "UNI", "JUP", "SOPH", "ONDO", "HYPE", "TRUMP"],datasets:[{data:[-0.72, -0.37, -0.21, 0.37, 0.42, 0.45, 2.47, 2.75, 3.26, 3.48, 8.39, 8.49, 9.21, 9.34, 10.57, 22.66, 22.87, 53.23, 66.62, 73.79],backgroundColor:bc([-0.72, -0.37, -0.21, 0.37, 0.42, 0.45, 2.47, 2.75, 3.26, 3.48, 8.39, 8.49, 9.21, 9.34, 10.57, 22.66, 22.87, 53.23, 66.62, 73.79]),borderRadius:4,indexAxis:'y'}]},options:{...DEF,indexAxis:'y',scales:{x:{ticks:{color:'#64748b',font:{size:10},callback:v=>'$'+v},grid:{color:'#1e293b'}},y:{ticks:{color:'#64748b',font:{size:10}},grid:{color:'#1e293b'}}}}});
 
-new Chart(document.getElementById('cp2Chart'), {
-  type: 'bar',
-  data: { labels: cp2Labels, datasets: [{ data: cp2Data, backgroundColor: barColors(cp2Data), borderRadius: 4, indexAxis: 'y' }] },
-  options: { ...DEF, indexAxis: 'y', scales: { x: { ticks: { color:'#64748b',font:{size:10}, callback: v => '$'+v }, grid: {color:'#1e293b'} }, y: { ticks: { color:'#64748b',font:{size:10} }, grid: {color:'#1e293b'} } } }
-});
-
-new Chart(document.getElementById('cumChart'), {
-  type: 'line',
-  data: {
-    labels: cum1L,
-    datasets: [
-      { label: 'Acct1 趋势', data: cum1V, borderColor: '#60a5fa', backgroundColor: 'rgba(96,165,250,0.1)', tension: 0.3, pointRadius: 0, fill: true },
-      { label: 'Acct2 均值回归', data: cum2V, borderColor: '#34d399', backgroundColor: 'rgba(52,211,153,0.1)', tension: 0.3, pointRadius: 0, fill: true }
-    ]
-  },
-  options: {
-    responsive: true,
-    plugins: { legend: { display: true, labels: { color:'#94a3b8' } }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': $' + ctx.raw?.toFixed(2) } } },
-    scales: { x: { ticks: { color:'#64748b',font:{size:10},maxTicksLimit:12 }, grid: {color:'#1e293b'} }, y: { ticks: { color:'#64748b',font:{size:10}, callback: v => '$'+v }, grid: {color:'#1e293b'} } }
-  }
-});
+new Chart(document.getElementById('cumChart'),{type:'line',data:{labels:["09/04", "09/04", "09/04", "09/04", "09/04", "09/04", "09/04", "09/04", "09/04", "09/05", "09/05", "09/05", "09/05", "09/05", "09/05", "09/05", "09/05", "09/05", "09/05", "09/05", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/06", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/07", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/08", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/09", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/10", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/11", "09/12", "09/12", "09/12", "09/12", "09/12", "09/12", "09/12", "09/12", "09/12", "09/12", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/13", "09/14", "09/14", "09/14", "09/14", "09/14", "09/14", "09/14", "09/14", "09/14", "09/14", "09/15", "09/15", "09/16", "09/16", "09/16", "09/16", "09/16", "09/16", "09/17", "09/17", "09/17", "09/18", "09/19", "09/19", "09/19", "09/19", "09/19", "09/19", "09/19", "09/19", "09/20", "09/20", "09/20", "09/20", "09/21", "09/21", "09/21", "09/21", "09/22", "09/22", "09/23", "09/23", "09/24", "09/24", "09/24", "09/25", "09/25", "09/25", "09/26", "09/26", "09/27", "09/27", "09/28", "09/29", "10/01", "10/02", "10/05", "10/07", "10/07", "10/07", "10/07", "10/08", "10/08", "10/08", "10/08", "10/08", "10/09", "10/10", "10/10", "10/10", "10/10", "10/10", "10/12", "10/12", "10/12", "10/12", "10/12", "10/12", "10/13", "10/13", "10/13", "10/13", "10/13", "10/13", "10/13", "10/19", "10/19", "10/20", "10/21", "10/21", "10/21", "10/21", "10/21", "10/21", "10/21", "10/21", "10/22", "10/22", "10/22", "10/22", "10/22", "10/22", "10/22", "10/22", "10/23", "10/23"],datasets:[
+  {label:'Acct1 趋势',data:[1.42, 1.24, 1.07, -7.74, -9.06, -24.63, -27.7, -32.02, -32.75, -33.78, -37.32, -43.88, -51.64, -55.69, -55.73, -61.61, -57.74, -57.62, -54.65, -57.08, -55.31, -59.99, -56.3, -56.56, -59.2, -64.98, -48.5, -49.04, -51.48, -57.61, -60.23, -65.35, -65.78, -62.56, -63.29, -65.02, -60.81, -61.21, -65.19, -67.21, -69.69, -71.58, -72.72, -83.24, -89.15, -95.41, -100.53, -105.73, -108.02, -107.75, -108.33, -103.87, -104.36, -100.61, -100.65, -103.32, -101.36, -84.65, -86.48, -82.04, -82.48, -85.25, -86.25, -87.02, -93.63, -97.91, -91.86, -83.02, -81.68, -84.98, -66.92, -11.71, -5.23, -2.68, -4.25, -3.11, -6.62, -13.21, -14.37, -24.26, -25.53, -27.63, -30.54, -32.58, -35.04, -35.35, -35.77, -37.32, -35.55, -48.07, -53.65, -59.11, -69.51, -74.3, -78.85, -84.13, -88.35, -87.48, -89.96, -101.11, -112.63, -114.07, -105.29, -96.28, -99.24, -96.86, -100.91, -101.99, -108.49, -115.34, -115.71, -118.79, -119.76, -122.56, -121.68, -123.28, -123.32, -123.23, -125.88, -128.94, -126.31, -126.48, -129.03, -129.4, -129.18, -131.66, -134.39, -136.77, -138.33, -139.07, -148.85, -158.84, -159.1, -140.31, -146.09, -156.38, -162.21, -169.36, -176.06, -176.6, -186.28, -193.98, -196.01, -196.18, -208.63, -208.73, -212.44, -183.32, -165.06, -166.59, -160.74, -137.53, -124.0, -115.54, -112.59, -166.78, -191.36, -255.7, -255.79, -275.2, -246.78, -286.83, -340.88, -250.97, -252.61, -206.25, -220.49, -210.94, -228.9, -228.45, -283.68, -330.52, -364.96, -375.74, -377.81, -316.55, -350.11, -353.57, -346.61, -353.73, -355.78, -322.64, -330.53, -345.44, -372.2, -376.23, -378.8, -408.75, -391.72, -345.41, -335.41, -345.32, -361.88, -362.28, -361.92, -368.94, -380.16, -413.64, -419.44, -438.15, -474.09, -466.89, -469.57, -471.69, -457.47, -457.5, -489.03, -499.93, -508.19, -516.36, -501.35, -323.16, -342.76, -342.48, -319.04, -322.75, -326.21, -229.45, -229.67, -237.27, -189.43, -194.05, -193.43, -181.77, -181.9, -188.95, -175.89, -162.32, -159.7, -182.07, -173.08],borderColor:'#60a5fa',backgroundColor:'rgba(96,165,250,0.08)',tension:.3,pointRadius:0,fill:true},
+  {label:'Acct2 均值回归',data:[-0.26, -1.08, -6.93, -7.35, -9.06, -9.55, -11.44, -12.91, -18.32, -9.96, -12.48, -13.86, -16.95, -22.52, -24.1, -26.39, -28.79, -31.99, -33.19, -35.21, -40.62, -43.36, -44.11, -45.5, -47.46, -57.52, -61.82, -64.21, -66.85, -67.02, -52.93, -29.46, -31.24, -31.25, -31.98, -36.52, -36.68, -44.3, -46.57, -51.37, -48.63, -50.23, -52.16, -52.15, -53.59, -57.24, -62.61, -69.43, -65.36, -67.22, -73.33, -74.54, -78.96, -80.41, -81.22, -83.24, -88.48, -89.2, -87.2, -79.67, -79.79, -79.4, -78.79, -78.62, -79.4, -81.79, -81.93, -84.77, -85.76, -88.28, -88.89, -90.62, -92.14, -92.13, -94.66, -96.02, -97.28, -99.06, -101.25, -103.2, -104.61, -108.01, -108.33, -94.47, -95.96, -94.64, -97.24, -99.57, -100.92, -105.19, -109.64, -109.66, -112.69, -113.65, -118.19, -116.64, -125.35, -120.25, -121.38, -122.17, -131.79, -133.54, -135.66, -138.03, -139.62, -142.23, -143.36, -144.44, -122.74, -124.35, -125.46, -126.78, -131.84, -131.93, -130.32, -126.81, -125.83, -126.88, -129.23, -130.62, -133.85, -132.08, -133.9, -137.3, -139.2, -139.63, -142.84, -150.09, -152.37, -155.86, -158.52, -158.53, -158.41, -158.3, -159.95, -161.87, -174.25, -177.01, -177.32, -174.32, -173.33, -174.05, -170.27, -169.16, -161.31, -160.44, -158.45, -154.03, -153.66, -154.81, -156.13, -152.78, -144.54, -144.58, -145.42, -147.21, -146.64, -146.64, -146.58, -146.55, -146.56, -134.67, -131.74, -130.22, -126.58, -123.22, -116.95, -110.93, -100.87, -91.55, -85.43, -68.66, -91.17, -32.54, 25.09, 28.57, 24.33, 21.87, -22.95, -37.85, -129.1, -145.44, -186.39, -222.53, -238.37, -356.54, -367.42, -438.49, -446.56, -436.65, -420.07, -412.97, -420.25, -426.63, -397.94, -340.47, -337.72, -354.94, -371.81, -381.82, -372.79, -356.48, -336.25, -331.4, -329.95, -329.18, -319.65, -320.61, -345.18, -344.2, -344.93, -350.97, -352.65, -369.18, -370.58, -404.5, -401.53, -407.72, -423.77, -437.63, -440.42, -463.56, -496.71, -538.42, -510.21, -494.55, -543.7, -536.14, -526.93, -553.23, -588.54, -632.36, -632.65, -619.38, -620.99, -599.96, -608.98, -617.87, -619.05, -644.94, -664.23, -664.81, -656.84, -645.79, -628.34],borderColor:'#34d399',backgroundColor:'rgba(52,211,153,0.08)',tension:.3,pointRadius:0,fill:true}
+]},options:{responsive:true,plugins:{legend:{display:true,labels:{color:'#94a3b8'}},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.raw?.toFixed(2)}}},scales:{x:{ticks:{color:'#64748b',font:{size:10},maxTicksLimit:12},grid:{color:'#1e293b'}},y:{ticks:{color:'#64748b',font:{size:10},callback:v=>'$'+v},grid:{color:'#1e293b'}}}}});
 </script>
 </body>
 </html>
