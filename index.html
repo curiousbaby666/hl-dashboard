@@ -71,7 +71,7 @@ code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:3px;font-siz
     <div style="color:var(--dim);font-size:11px;margin-top:3px">EMO Capital · Hyperliquid 双账户自动化策略</div>
   </div>
   <div class="meta">
-    更新: 2026-10-29 12:00 SGT<br>
+    更新: 2026-10-29 20:30 SGT<br>
     Acct1: 0x0476...acd5 · Acct2: 0xFdA2...acC6
   </div>
 </div>
@@ -84,14 +84,14 @@ code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:3px;font-siz
 <div class="grid2">
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center">
-      <span style="color:var(--dim);font-size:11px;text-transform:uppercase">Acct1 趋势跟踪<span class="ver">v4.5</span></span>
+      <span style="color:var(--dim);font-size:11px;text-transform:uppercase">Acct1 趋势跟踪<span class="ver">v4.6</span></span>
       <span style="color:var(--green);font-size:11px">✅ 运行中</span>
     </div>
-    <div class="balance">$896.55</div>
-    <div style="color:var(--dim);font-size:11px">净值(含浮动) · 14天涨幅 +$473 · 起始~$379</div>
+    <div class="balance">$793.23</div>
+    <div style="color:var(--dim);font-size:11px">净值(含浮动) · 7仓混合方向 · 起始~$379</div>
     <div style="margin-top:14px">
-      <div class="stat-row"><span class="stat-label">持仓</span><span class="stat-val">3 / 8</span></div>
-      <div class="stat-row"><span class="stat-label">浮动盈亏</span><span class="stat-val" style="color:var(--green)">+$1.90</span></div>
+      <div class="stat-row"><span class="stat-label">持仓</span><span class="stat-val">7 / 8</span></div>
+      <div class="stat-row"><span class="stat-label">浮动盈亏</span><span class="stat-val" style="color:var(--red)">-$4.41（多空混合）</span></div>
       <div class="stat-row"><span class="stat-label">扫描周期</span><span class="stat-val">每2小时 (cron 0 */2 * * *)</span></div>
       <div class="stat-row"><span class="stat-label">候选池</span><span class="stat-val">Perp TOP50 by 24h vol</span></div>
       <div class="stat-row"><span class="stat-label">策略</span><span class="stat-val">4h K线双蜡烛趋势跟踪</span></div>
@@ -102,8 +102,8 @@ code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:3px;font-siz
       <span style="color:var(--dim);font-size:11px;text-transform:uppercase">Acct2 均值回归<span class="ver">v5.6</span></span>
       <span style="color:var(--green);font-size:11px">✅ 空仓待机</span>
     </div>
-    <div class="balance">$1,134.71</div>
-    <div style="color:var(--dim);font-size:11px">USDC Spot余额 (Perp空仓) · 14天净盈亏 -$3.5</div>
+    <div class="balance">$1,071.28</div>
+    <div style="color:var(--dim);font-size:11px">USDC Spot余额 · Perp空仓 · HYPE 2次止损共-$53+</div>
     <div style="margin-top:14px">
       <div class="stat-row"><span class="stat-label">持仓</span><span class="stat-val">0 / 8</span></div>
       <div class="stat-row"><span class="stat-label">空仓原因</span><span class="stat-val" style="color:var(--yellow)">RSI/BB未达极值</span></div>
@@ -118,27 +118,47 @@ code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:3px;font-siz
 <!-- ═══════════════════════════════════════════════════════ SECTION 2: POSITIONS -->
 <div class="section">
 <div class="section-title">📌 当前持仓</div>
-<div class="card">
-  <div style="color:var(--dim);font-size:11px;margin-bottom:10px">Acct1 持仓 (3/8) — 更新 2026-10-29 12:00 SGT</div>
+  <div class="card">
+  <div style="color:var(--dim);font-size:11px;margin-bottom:10px">Acct1 持仓 (7/8) — 更新 2026-10-29 20:30 SGT</div>
   <table>
-    <tr><th>代币</th><th>方向</th><th>入场价</th><th>浮盈</th><th>止损Trigger</th><th>持仓时长</th><th>状态</th></tr>
+    <tr><th>代币</th><th>方向</th><th>入场价</th><th>浮盈</th><th>止损Trigger</th><th>状态</th></tr>
     <tr class="open-row">
-      <td><strong>AAVE</strong></td><td><span class="badge short">SHORT</span></td>
-      <td>$129.41</td><td style="color:var(--green)">+$1.86</td>
-      <td>~$133.3</td><td>~2h</td><td style="color:var(--dim)">新仓，追踪未激活</td>
+      <td><strong>HYPE</strong></td><td><span class="badge long">LONG</span></td>
+      <td>$88.02</td><td style="color:var(--green)">+$35.69</td>
+      <td>~$85.4</td><td style="color:var(--green)">盈利中，追踪激活</td>
     </tr>
     <tr class="open-row">
-      <td><strong>ZRO</strong></td><td><span class="badge short">SHORT</span></td>
-      <td>$1.628</td><td style="color:var(--green)">+$1.45</td>
-      <td>~$1.677</td><td>~2h</td><td style="color:var(--dim)">新仓，追踪未激活</td>
+      <td><strong>ZEC</strong></td><td><span class="badge long">LONG</span></td>
+      <td>$1274</td><td style="color:var(--green)">+$8.52</td>
+      <td>~$1236</td><td style="color:var(--dim)">盈利中</td>
     </tr>
     <tr class="open-row">
-      <td><strong>LIT</strong></td><td><span class="badge short">SHORT</span></td>
-      <td>$2.796</td><td style="color:var(--red)">-$1.41</td>
-      <td>~$2.88</td><td>~2h</td><td style="color:var(--dim)">新仓，止损保护中</td>
+      <td><strong>PUMP</strong></td><td><span class="badge long">LONG</span></td>
+      <td>$0.004361</td><td style="color:var(--green)">+$9.32</td>
+      <td>~$0.00423</td><td style="color:var(--dim)">盈利中</td>
+    </tr>
+    <tr class="open-row">
+      <td><strong>LINK</strong></td><td><span class="badge short">SHORT</span></td>
+      <td>$11.502</td><td style="color:var(--red)">-$14.95</td>
+      <td>~$11.85</td><td style="color:var(--dim)">亏损，止损保护中</td>
+    </tr>
+    <tr class="open-row">
+      <td><strong>NEAR</strong></td><td><span class="badge short">SHORT</span></td>
+      <td>$4.419</td><td style="color:var(--red)">-$11.38</td>
+      <td>~$4.55</td><td style="color:var(--dim)">亏损，止损保护中</td>
+    </tr>
+    <tr class="open-row">
+      <td><strong>TAO</strong></td><td><span class="badge short">SHORT</span></td>
+      <td>$247.18</td><td style="color:var(--red)">-$6.68</td>
+      <td>~$254.6</td><td style="color:var(--dim)">亏损，止损保护中</td>
+    </tr>
+    <tr class="open-row">
+      <td><strong>WLD</strong></td><td><span class="badge short">SHORT</span></td>
+      <td>$0.4195</td><td style="color:var(--red)">-$4.51</td>
+      <td>~$0.432</td><td style="color:var(--dim)">亏损，止损保护中</td>
     </tr>
   </table>
-  <div style="margin-top:10px;color:var(--dim);font-size:11px">Acct2: 空仓待机 · USDC Spot $1,134.71 · 连续数小时无信号（市场RSI未达极值区间）</div>
+  <div style="margin-top:10px;color:var(--dim);font-size:11px">Acct2: 空仓待机 · USDC Spot $1,071.28 · HYPE冷却中(至15:02 UTC) · RSI/BB未达极值</div>
 </div>
 </div>
 
@@ -159,7 +179,7 @@ code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:3px;font-siz
 
 <!-- ═══════════════════════════════════════════════════════ SECTION 4: RULES A1 -->
 <div class="section">
-<div class="section-title">📋 Acct1 策略规则全览 <span class="ver">v4.5</span></div>
+  <div class="section-title">📋 Acct1 策略规则全览 <span class="ver">v4.6</span></div>
 <div class="grid2">
   <div>
     <div class="rule-block green">
@@ -174,6 +194,7 @@ code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:3px;font-siz
         <li>EMA20趋势过滤：做空要求当前价格 &lt; EMA20（下行趋势）</li>
         <li>防追高：前4根K线累计涨跌幅超过MAX_CUMULATIVE则跳过（不追极度拉伸行情）</li>
         <li>黑名单排除：XPL / CRV / ENA / AR / ONDO（历史亏损过大已永久屏蔽）</li>
+        <li><strong>冷却期过滤(v4.6)：</strong>exchange止损触发后冷却4h不重入（幽灵仓位Bug修复）</li>
         <li>持仓上限：最多同时持有8个仓位</li>
         <li>已持有该币种则跳过（不加仓）</li>
       </ul>
@@ -389,6 +410,11 @@ code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:3px;font-siz
     <table>
       <tr><th>版本</th><th>日期</th><th>改动</th><th>背景/教训</th></tr>
       <tr>
+        <td><span class="ver">v4.6</span></td><td>2026-10-29</td>
+        <td style="color:var(--dim)">🐛 <strong>Bug修复: 幽灵仓位不写冷却</strong> — exchange止损触发后bot检测到"幽灵仓位"但未设冷却，同轮扫描立刻重入。现在写4h冷却 + 在check_entry_signals加冷却过滤</td>
+        <td style="color:var(--dim)">与Acct2同根因。HYPE LONG示例：若ghost清除后K线仍有信号，本次scan立刻重入</td>
+      </tr>
+      <tr>
         <td><span class="ver">v4.5</span></td><td>2026-10-29</td>
         <td style="color:var(--dim)">信号改为"两根K线同向总和≥2%"（不再要求每根单独≥2%）</td>
         <td style="color:var(--dim)">原逻辑要求每根≥2%合计≥4%，入场太晚错失初段</td>
@@ -428,6 +454,11 @@ code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:3px;font-siz
     <div style="color:var(--dim);font-size:11px;margin-bottom:10px">Acct2 均值回归 — 上线至今完整记录</div>
     <table>
       <tr><th>版本</th><th>日期</th><th>改动</th><th>背景/教训</th></tr>
+      <tr>
+        <td><span class="ver">v5.6b</span></td><td>2026-10-29</td>
+        <td style="color:var(--dim)">🐛 <strong>Bug修复: 幽灵仓位不写冷却</strong> — sync_positions()返回值被丢弃，exchange止损触发后冷却未写入，同轮scan立刻重入。现在ghost_removed列表写2h冷却</td>
+        <td style="color:var(--dim)">HYPE今日示例：19:01开空→19:50被止损→20:01幽灵清除→同分钟重开空。两次止损共亏-$53+</td>
+      </tr>
       <tr>
         <td><span class="ver">v5.6</span></td><td>2026-10-29</td>
         <td style="color:var(--dim)">RSI做空阈值80→70（信号频率恢复），日志版本号修正v5.2→v5.6</td>
