@@ -385,28 +385,99 @@ code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:3px;font-siz
 <div class="section-title">🔄 版本历史</div>
 <div class="grid2">
   <div class="card">
-    <div style="color:var(--dim);font-size:11px;margin-bottom:10px">Acct1 趋势跟踪</div>
+    <div style="color:var(--dim);font-size:11px;margin-bottom:10px">Acct1 趋势跟踪 — 上线至今完整记录</div>
     <table>
-      <tr><th>版本</th><th>日期</th><th>改动</th></tr>
-      <tr><td><span class="ver">v4.5</span></td><td>2026-10-29</td><td style="color:var(--dim)">信号条件改为"两根K线同向且总和≥2%"（不再要求每根单独≥2%），入场更灵敏</td></tr>
-      <tr><td><span class="ver">v4.4</span></td><td>2026-10-26</td><td style="color:var(--dim)">追踪止损peak×0.97激活，每2h更新挂单</td></tr>
-      <tr><td><span class="ver">v4.3</span></td><td>2026-10-24</td><td style="color:var(--dim)">completed pair盲区修复 + Bug5修复(triggerPx类型) + 网络3次重试</td></tr>
-      <tr><td><span class="ver">v4.2</span></td><td>2026-10-23</td><td style="color:var(--dim)">Exchange trigger止损单替换轮询止损</td></tr>
-      <tr><td><span class="ver">v4.1</span></td><td>2026-10-22</td><td style="color:var(--dim)">Top50扫描 + 黑名单XPL/CRV/ENA/AR/ONDO</td></tr>
-      <tr><td><span class="ver">v4.0</span></td><td>2026-10-20</td><td style="color:var(--dim)">信号从单蜡烛≥3%改为双蜡烛各≥2%</td></tr>
+      <tr><th>版本</th><th>日期</th><th>改动</th><th>背景/教训</th></tr>
+      <tr>
+        <td><span class="ver">v4.5</span></td><td>2026-10-29</td>
+        <td style="color:var(--dim)">信号改为"两根K线同向总和≥2%"（不再要求每根单独≥2%）</td>
+        <td style="color:var(--dim)">原逻辑要求每根≥2%合计≥4%，入场太晚错失初段</td>
+      </tr>
+      <tr>
+        <td><span class="ver">v4.4</span></td><td>2026-10-26</td>
+        <td style="color:var(--dim)">追踪止损挂单：peak×0.97，每2h更新exchange stop order</td>
+        <td style="color:var(--dim)">STRK SHORT持仓3天+稳定跑赢，追踪机制成熟</td>
+      </tr>
+      <tr>
+        <td><span class="ver">v4.3</span></td><td>2026-10-24</td>
+        <td style="color:var(--dim)">① forming candle盲区修复（增加completed pair检查）② Bug5修复(triggerPx类型str→float) ③ 网络失败3次重试 ④ 分批止盈(2%平2/3 + 5%全平) ⑤ 最大持仓6→8</td>
+        <td style="color:var(--dim)">WLD急跌信号被错过；所有trigger止损单全部静默失效（Bug5）</td>
+      </tr>
+      <tr>
+        <td><span class="ver">v4.2</span></td><td>2026-10-23</td>
+        <td style="color:var(--dim)">① Exchange Trigger止损单替代轮询止损 ② 扫描周期1h→2h ③ 扫描范围扩至TOP50 ④ 黑名单(XPL/CRV/ENA/AR/ONDO)</td>
+        <td style="color:var(--dim)">轮询止损滑点严重（32笔超-5%多亏$435）；5个币历史胜率0%</td>
+      </tr>
+      <tr>
+        <td><span class="ver">v4.1</span></td><td>2026-09-22</td>
+        <td style="color:var(--dim)">① EMA20方向过滤（上涨只做多/下跌只做空） ② 防追高（前4根K线累计涨跌>12%不入场）</td>
+        <td style="color:var(--dim)">v4.0裸跑7天亏$219：趋势反转时逆势单频繁触发，无方向保护</td>
+      </tr>
+      <tr>
+        <td><span class="ver">v4.0</span></td><td>2026-09-15</td>
+        <td style="color:var(--dim)">【初版上线】连续2根4h K线同向≥2%入场。轮询止损-3%，最大持仓6个。1h扫描全市场</td>
+        <td style="color:var(--dim)">7天亏$219，主要问题：无趋势过滤、轮询止损滑点、没有方向判断</td>
+      </tr>
     </table>
+    <div style="margin-top:10px;color:var(--dim);font-size:11px">
+      账户起点：2026-09-15上线，初始资金约$100-200（小额测试）<br>
+      当前：$896.55（含近期3仓SHORT浮盈+$1.90）
+    </div>
   </div>
   <div class="card">
-    <div style="color:var(--dim);font-size:11px;margin-bottom:10px">Acct2 均值回归</div>
+    <div style="color:var(--dim);font-size:11px;margin-bottom:10px">Acct2 均值回归 — 上线至今完整记录</div>
     <table>
-      <tr><th>版本</th><th>日期</th><th>改动</th></tr>
-      <tr><td><span class="ver">v5.6</span></td><td>2026-10-29</td><td style="color:var(--dim)">RSI_OVERBOUGHT 80→70（信号频率恢复），日志版本号修正</td></tr>
-      <tr><td><span class="ver">v5.5</span></td><td>2026-10-24</td><td style="color:var(--dim)">追踪止损(峰值-3%)引入 + 8仓上限</td></tr>
-      <tr><td><span class="ver">v5.4</span></td><td>2026-10-24</td><td style="color:var(--dim)">移除12h窗口限制</td></tr>
-      <tr><td><span class="ver">v5.3</span></td><td>2026-10-24</td><td style="color:var(--dim)">时间止损 24h→48h (kPEPE教训)</td></tr>
-      <tr><td><span class="ver">v5.2</span></td><td>2026-10-23</td><td style="color:var(--dim)">分批止盈 + Exchange trigger止损</td></tr>
-      <tr><td><span class="ver">v5.1</span></td><td>2026-10-20</td><td style="color:var(--dim)">RSI做空 70→80 + ATR过滤引入</td></tr>
+      <tr><th>版本</th><th>日期</th><th>改动</th><th>背景/教训</th></tr>
+      <tr>
+        <td><span class="ver">v5.6</span></td><td>2026-10-29</td>
+        <td style="color:var(--dim)">RSI做空阈值80→70（信号频率恢复），日志版本号修正v5.2→v5.6</td>
+        <td style="color:var(--dim)">RSI80做空条件太严，连续数天0信号</td>
+      </tr>
+      <tr>
+        <td><span class="ver">v5.5</span></td><td>2026-10-24</td>
+        <td style="color:var(--dim)">最大持仓5→8，引入追踪止损（盈利≥2%后止损移至peak×0.97）</td>
+        <td style="color:var(--dim)">资金利用率偏低；追踪机制向Acct1对齐</td>
+      </tr>
+      <tr>
+        <td><span class="ver">v5.4</span></td><td>2026-10-24</td>
+        <td style="color:var(--dim)">移除12h窗口限制（12h内开仓≤3个的限制）</td>
+        <td style="color:var(--dim)">此限制误拦截有效信号；改由trigger止损单做风控</td>
+      </tr>
+      <tr>
+        <td><span class="ver">v5.3</span></td><td>2026-10-24</td>
+        <td style="color:var(--dim)">时间止损24h→48h；Bug5修复(triggerPx str→float)；为3个存量仓位补挂止损单</td>
+        <td style="color:var(--dim)">kPEPE在24h被强平，再过24h价格继续朝有利方向走，错失盈利</td>
+      </tr>
+      <tr>
+        <td><span class="ver">v5.2</span></td><td>2026-10-23</td>
+        <td style="color:var(--dim)">① RSI做空阈值70→80（减少假信号） ② 分批止盈（50% BB中轨 + 50% RSI反转/48h时间止盈） ③ Exchange Trigger止损单(-3%)</td>
+        <td style="color:var(--dim)">全仓一次性止盈时机难把握；轮询止损滑点</td>
+      </tr>
+      <tr>
+        <td><span class="ver">v5.1</span></td><td>2026-10-05</td>
+        <td style="color:var(--dim)">① 保证金50U→100U ② 最大持仓6→5 ③ 12h内开仓≤3个限制 ④ 趋势暂停（12h内3仓全亏≥2%→封仓24h）</td>
+        <td style="color:var(--dim)">10-04五单集中做空(BTC/DOGE/ADA/XRP/VVV)全部浮亏，集中风险暴露</td>
+      </tr>
+      <tr>
+        <td><span class="ver">v5.0</span></td><td>2026-09-25</td>
+        <td style="color:var(--dim)">第一性原理重写。去掉EMA过滤，改用ATR&lt;2%过滤判断市场状态。20U→50U/笔</td>
+        <td style="color:var(--dim)">v4.0 EMA过滤与均值回归逻辑死锁：价格在BB上轨时EMA看涨会阻止做空，几乎0信号</td>
+      </tr>
+      <tr>
+        <td><span class="ver">v4.0</span></td><td>2026-09-20</td>
+        <td style="color:var(--dim)">引入EMA方向过滤（尝试防止趋势行情做空）。5天后废弃</td>
+        <td style="color:var(--dim)">发现EMA过滤与BB+RSI信号逻辑根本矛盾，已有信号时EMA必然同向，形成死锁</td>
+      </tr>
+      <tr>
+        <td><span class="ver">v3.2</span></td><td>2026-09-13</td>
+        <td style="color:var(--dim)">【初版上线】BB(20,2)+RSI(14) 纯均值回归。1h K线。20U/笔，5x杠杆。无趋势过滤</td>
+        <td style="color:var(--dim)">震荡市胜率70%+。09-17~18市场单边拉涨，做空单全部被碾压，2天亏$795。无趋势过滤是死穴</td>
+      </tr>
     </table>
+    <div style="margin-top:10px;color:var(--dim);font-size:11px">
+      账户起点：2026-09-13上线，初始资金$300（Spot USDC）<br>
+      当前：$1,134.71 USDC Spot（空仓待机）
+    </div>
   </div>
 </div>
 </div>
